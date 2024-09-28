@@ -12,7 +12,7 @@ function getComputerChoice() {
 
 // function getHumanChoice uses a prompt method to allow the user to input their choice between "rock", "paper" or "scissors".
 function getHumanChoice() {
-    let choice = prompt("Choose \"Rock\", \"Paper\" or \"Scissors\"");
+    let choice = prompt("Type \"Rock\", \"Paper\" or \"Scissors\"");
     return choice.toLowerCase();
 }
 
@@ -47,17 +47,19 @@ function playRound(computerChoice,humanChoice) {
     }
 }
 
-// function announceWinner dynamically logs a message into the console declaring the winner every round.
+// function announceWinner dynamically logs a message into the console declaring the winner every round. If the player types an invalid response the point will be awarded to the computer.
 function announceWinner(winner) {
     if (winner === "computer") {
-        console.log(`Human chose ${humanSelection}, and computer chose ${computerSelection}. Computer wins! The scores are Human: ${humanScore}, Computer: ${computerScore}`);
+        console.log(`Human chose ${humanSelection}, and computer chose ${computerSelection}. Computer wins!`);
     } else if (winner === "human") {
-        console.log(`Human chose ${humanSelection}, and computer chose ${computerSelection}. Human wins! The scores are Human: ${humanScore}, Computer: ${computerScore}`);
+        console.log(`Human chose ${humanSelection}, and computer chose ${computerSelection}. Human wins!`);
     } else if (winner === "tie") {
-        console.log(`Human chose ${humanSelection}, and computer chose ${computerSelection}. It's a tie! The scores are Human: ${humanScore}, Computer: ${computerScore}`);
+        console.log(`Human chose ${humanSelection}, and computer chose ${computerSelection}. It's a tie!`);
     } else {
-        console.log(`Human chose "${humanSelection}", an invalid answer. Computer wins by default! The scores are Human: ${humanScore}, Computer: ${computerScore}`);
+        console.log(`Human chose "${humanSelection}", an invalid answer. Computer wins by default!`);
     }
+    console.log(`The scores are Human: ${humanScore}, Computer: ${computerScore}`);
+    console.log("---------------------------")
 }
 
 const humanSelection = getHumanChoice();
