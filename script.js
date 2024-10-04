@@ -6,20 +6,14 @@ function playGame() {
     // initialize scores to 0
     let humanScore = 0;
     let computerScore = 0;
-    let round = 1;
+    let round = 0;
 
 
     let buttons = document.querySelector("#buttons");
     buttons.addEventListener("click", (event) => {playRound(getComputerChoice(),event.target.id); });
-    
-    // // for round is less than 5, play another round increment the round number, and check if it's the final round
-    // for (let round = 1; round <= 5; round++) {
-    //     console.log(`Round ${round}/5`);
-    //     playRound();
-    //     checkRound(round);
-    // }
-    // function playRound takes the return value of getComputerChoice() and getPlayerChoice() as arguments, plays a single round, increments the appropriate round winner's score, and logs a winner announcement using announceWinner()
+
     function playRound(computerChoice,humanChoice) {
+        round++;
         if (computerChoice === "rock" && humanChoice === "paper") {
             humanScore++;
             announceWinner("human")
@@ -46,43 +40,44 @@ function playGame() {
         }
         // function announceWinner dynamically logs a message into the console declaring the winner every round. If the player types an invalid response the point will be awarded to the computer.
         function announceWinner(winner) {
-            let scores = document.querySelector("#scores");
-            let currentScore= document.querySelector("span");
+            let scoresList = document.querySelector("#scoresList");
+            let currentScore= document.querySelector("#results");
             let newScore = document.createElement("li");
-        
             if (winner === "computer") {
-                console.log(`Human chose ${humanChoice}, and computer chose ${computerChoice}. Computer wins!`);
-                newScore.textContent = (`Human chose ${humanChoice}, and computer chose ${computerChoice}. Computer wins!`);
+                console.log(`Human chose ${humanChoice}, and computer chose ${computerChoice}. Computer wins round ${round}!`);
+                newScore.textContent = (`Human chose ${humanChoice}, and computer chose ${computerChoice}. Computer wins round ${round}!`);
             } else if (winner === "human") {
-                console.log(`Human chose ${humanChoice}, and computer chose ${computerChoice}. Human wins!`);
-                newScore.textContent = (`Human chose ${humanChoice}, and computer chose ${computerChoice}. Human wins!`);
+                console.log(`Human chose ${humanChoice}, and computer chose ${computerChoice}. Human wins round ${round}!`);
+                newScore.textContent = (`Human chose ${humanChoice}, and computer chose ${computerChoice}. Human wins round ${round}!`);
             } else if (winner === "tie") {
-                console.log(`Human and computer chose ${humanChoice}. It's a tie!`);
-                newScore.textContent = (`Human and computer chose ${humanChoice}. It's a tie!`);
+                console.log(`Human and computer chose ${humanChoice}. It's a tie for round ${round}!`);
+                newScore.textContent = (`Human and computer chose ${humanChoice}. It's a tie for round ${round}!`);
             } else {
-                console.log(`Human chose "${humanChoice}", an invalid answer. Computer wins by default!`);
-                newScore.textContent = (`Human chose "${humanChoice}", an invalid answer. Computer wins by default!`);
+                console.log(`Human chose "${humanChoice}", an invalid answer. Computer wins round ${round} by default!`);
+                newScore.textContent = (`Human chose "${humanChoice}", an invalid answer. Computer wins round ${round} by default!`);
             }
-            scores.appendChild(newScore);
-            currentScore.textContent = (`Human: ${humanScore}, Computer: ${computerScore}`);
-            console.log(`Human: ${humanScore}, Computer: ${computerScore}`);
-            console.log("---------------------------")
-        }
-    }
 
-    // function checkRound checks to see if we're on the final round before tallying up the final scores and logging the winner
-    function checkRound(round) {
-        if (round === 5) {
-            console.log(`Our final scores are:`);
-            console.log(`Human: ${humanScore}, Computer: ${computerScore}`);
-            if (humanScore === computerScore) {
-                console.log("No winners today! That's a tie!");
-            } else if (humanScore > computerScore) {
-                console.log("Human wins the game!");
-            } else {
-                console.log("Computer wins the game!");
+            scoresList.appendChild(newScore);
+            currentScore.textContent = (`Human: ${humanScore}, Computer: ${computerScore}`);
+            console.log(`Human: ${humanScore}, Computer: ${computerScore}`  );
+            console.log("")
+        
+            if (humanScore === 5 || computerScore === 5) newGame();
+
+            function newGame() {
+                if (computerScore > humanScore) {
+                    currentScore.textContent = (`Computer made it to five points first! Computer wins the game in ${round} rounds!`);
+                } else {
+                    currentScore.textContent = (`Human made it to five points first! Human wins the game in ${round} rounds!`)
+                }
+                round = 0;
+                humanScore = 0;
+                computerScore = 0;
+                while (scoresList.firstChild) {
+                    scoresList.removeChild(scoresList.firstChild);
+                }
             }
-        }  
+        }
     }
 }
 
