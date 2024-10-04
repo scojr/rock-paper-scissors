@@ -46,15 +46,25 @@ function playGame() {
         }
         // function announceWinner dynamically logs a message into the console declaring the winner every round. If the player types an invalid response the point will be awarded to the computer.
         function announceWinner(winner) {
+            let scores = document.querySelector("#scores");
+            let currentScore= document.querySelector("span");
+            let newScore = document.createElement("li");
+        
             if (winner === "computer") {
                 console.log(`Human chose ${humanChoice}, and computer chose ${computerChoice}. Computer wins!`);
+                newScore.textContent = (`Human chose ${humanChoice}, and computer chose ${computerChoice}. Computer wins!`);
             } else if (winner === "human") {
                 console.log(`Human chose ${humanChoice}, and computer chose ${computerChoice}. Human wins!`);
+                newScore.textContent = (`Human chose ${humanChoice}, and computer chose ${computerChoice}. Human wins!`);
             } else if (winner === "tie") {
                 console.log(`Human and computer chose ${humanChoice}. It's a tie!`);
+                newScore.textContent = (`Human and computer chose ${humanChoice}. It's a tie!`);
             } else {
                 console.log(`Human chose "${humanChoice}", an invalid answer. Computer wins by default!`);
+                newScore.textContent = (`Human chose "${humanChoice}", an invalid answer. Computer wins by default!`);
             }
+            scores.appendChild(newScore);
+            currentScore.textContent = (`Human: ${humanScore}, Computer: ${computerScore}`);
             console.log(`Human: ${humanScore}, Computer: ${computerScore}`);
             console.log("---------------------------")
         }
